@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="https://ablaze-mirai.github.io/Emphasized-characters/">
+    <meta property="og:title" content="強調文字作成ツール">
+    <meta property="og:image" content="https://ablaze-mirai.github.io/Emphasized-characters/ogp.png">
+    <title>強調文字作成ツール</title>
+</head>
+<body>
+    <main class="container">
+        <section>
+            <h1>強調文字作成ツール</h1>
+            <p>
+                ＿人人人人人人人＿<br />
+                ＞ 歌う天然水! ＜<br />
+                ￣Y^Y^Y^Y^Y^￣
+            </p>
+            <p>のようなAAを作成できます</p>
+        </section>
+        <section>
+            <input type="text" class="form-control" id="text" aria-describedby="変換したい文字を入力">
+            <pre id="result"></pre>
+            <button id="copy" class="btn btn-primary">コピー</button>
+        </section>
+    </main>
+    <style>
+        .btn {
+            width: 100%;
+        }
+
+        main {
+            margin-top: 50px;
+        }
+
+        pre {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        const text = document.getElementById("text");
+        const result = document.getElementById("result");
+        const copy = document.getElementById("copy");
+
+        text.oninput = () => {
+            const l = text.value.length;
+            const model = ["＿", "＞", "￣", "＜", "人", "Y^"];
+
+            let x0 = model[0];
+            let x1 = `${model[1]} ${text.value} ${model[3]}`;
+            let x2 = model[2];
+            for (let i = 0; i < l; i++) {
+                if (!i % 5 === 0) {
+                    x2 += model[5];
+                }
+
+                if (i % 12 === 0) {
+                    x0 += model[4];
+                }
+                x0 += model[4];
+            }
+            x0 += model[0];
+            x2 += model[2];
+
+            const m = `${x0}\n${x1}\n${x2}`;
+            result.innerText = m;
+        }
+
+        copy.onclick = async () => {
+            try {
+                await navigator.clipboard.writeText(result.innerText);
+                alert("コピーしました。")
+            } catch (error) {
+                alert((error && error.message) || "コピーに失敗しました")
+            }
+        }
+    </script>
+</body>
+</html>
